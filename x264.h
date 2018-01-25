@@ -554,6 +554,176 @@ typedef struct x264_param_t
     void (*nalu_process) ( x264_t *h, x264_nal_t *nal, void *opaque );
 } x264_param_t;
 
+#include <inttypes.h>
+#define PRINT_DEBUG_MEMBER_INT64(m) printf(" %s = 0x%" PRIx64 "\n", #m, m);
+#define PR_INT32(m) printf(" %s = 0x%" PRIx32 "\n", #m, m);
+#define PR_PTR(m) printf(" %s = %p\n", #m, m);
+#define PR_FLOAT(m) printf(" %s = %f\n", #m, m);
+__inline__ void x264_encoder_param_dump(x264_param_t *p)
+{
+	PR_INT32(p->cpu);
+	PR_INT32(p->i_threads);
+	PR_INT32(p->i_lookahead_threads);
+	PR_INT32(p->b_sliced_threads);
+	PR_INT32(p->b_deterministic);
+	PR_INT32(p->b_cpu_independent);
+	PR_INT32(p->i_sync_lookahead);
+	PR_INT32(p->i_width);
+	PR_INT32(p->i_height);
+	PR_INT32(p->i_csp);
+	PR_INT32(p->i_level_idc);
+	PR_INT32(p->i_frame_total);
+	PR_INT32(p->i_profile);
+	PR_INT32(p->i_nal_hrd);
+
+	PR_INT32(p->vui.i_sar_height);
+	PR_INT32(p->vui.i_sar_width);
+	PR_INT32(p->vui.i_overscan);
+	PR_INT32(p->vui.i_vidformat);
+	PR_INT32(p->vui.b_fullrange);
+	PR_INT32(p->vui.i_colorprim);
+	PR_INT32(p->vui.i_transfer);
+	PR_INT32(p->vui.i_colmatrix);
+	PR_INT32(p->vui.i_chroma_loc);
+
+	PR_INT32(p->i_frame_reference);
+	PR_INT32(p->i_dpb_size);
+	PR_INT32(p->i_keyint_max);
+	PR_INT32(p->i_keyint_min);
+	PR_INT32(p->i_scenecut_threshold);
+	PR_INT32(p->b_intra_refresh);
+	PR_INT32(p->i_bframe);
+	PR_INT32(p->i_bframe_adaptive);
+	PR_INT32(p->i_bframe_bias);
+	PR_INT32(p->i_bframe_pyramid);
+	PR_INT32(p->b_open_gop);
+	PR_INT32(p->b_bluray_compat);
+	PR_INT32(p->b_avcintra_compat);
+	PR_INT32(p->b_deblocking_filter);
+	PR_INT32(p->i_deblocking_filter_alphac0);
+	PR_INT32(p->i_deblocking_filter_beta);
+
+	PR_INT32(p->b_cabac);
+	PR_INT32(p->i_cabac_init_idc);
+
+	PR_INT32(p->b_interlaced);
+	PR_INT32(p->b_constrained_intra);
+
+	PR_INT32(p->i_cqm_preset);
+#if 0
+    char        *psz_cqm_file;      /* filename (in UTF-8) of CQM file, JM format */
+    uint8_t     cqm_4iy[16];        /* used only if i_cqm_preset == X264_CQM_CUSTOM */
+    uint8_t     cqm_4py[16];
+    uint8_t     cqm_4ic[16];
+    uint8_t     cqm_4pc[16];
+    uint8_t     cqm_8iy[64];
+    uint8_t     cqm_8py[64];
+    uint8_t     cqm_8ic[64];
+    uint8_t     cqm_8pc[64];
+#endif
+
+	PR_INT32(p->i_log_level);
+	PR_INT32(p->b_visualize);
+	PR_INT32(p->b_full_recon);
+
+	PR_INT32(p->analyse.intra);
+	PR_INT32(p->analyse.inter);
+	PR_INT32(p->analyse.b_transform_8x8);
+	PR_INT32(p->analyse.i_weighted_pred);
+	PR_INT32(p->analyse.b_weighted_bipred);
+	PR_INT32(p->analyse.i_direct_mv_pred);
+	PR_INT32(p->analyse.i_chroma_qp_offset);
+	PR_INT32(p->analyse.i_me_method);
+	PR_INT32(p->analyse.i_me_range);
+	PR_INT32(p->analyse.i_mv_range);
+	PR_INT32(p->analyse.i_mv_range_thread);
+	PR_INT32(p->analyse.i_subpel_refine);
+	PR_INT32(p->analyse.b_chroma_me);
+	PR_INT32(p->analyse.b_mixed_references);
+	PR_INT32(p->analyse.i_trellis);
+	PR_INT32(p->analyse.b_fast_pskip);
+	PR_INT32(p->analyse.b_dct_decimate);
+	PR_INT32(p->analyse.i_noise_reduction);
+	PR_FLOAT(p->analyse.f_psy_rd);
+	PR_FLOAT(p->analyse.f_psy_trellis);
+	PR_INT32(p->analyse.b_psy);
+	PR_INT32(p->analyse.b_mb_info);
+	PR_INT32(p->analyse.b_mb_info_update);
+	PR_INT32(p->analyse.i_luma_deadzone[0]);
+	PR_INT32(p->analyse.i_luma_deadzone[1]);
+	PR_INT32(p->analyse.b_psnr);
+	PR_INT32(p->analyse.b_ssim);
+
+	PR_INT32(p->rc.i_rc_method);
+	PR_INT32(p->rc.i_qp_constant);
+	PR_INT32(p->rc.i_qp_min);
+	PR_INT32(p->rc.i_qp_max);
+	PR_INT32(p->rc.i_qp_step);
+	PR_INT32(p->rc.i_bitrate);
+	PR_FLOAT(p->rc.f_rf_constant);
+	PR_FLOAT(p->rc.f_rf_constant_max);
+	PR_FLOAT(p->rc.f_rate_tolerance);
+	PR_INT32(p->rc.i_vbv_max_bitrate);
+	PR_INT32(p->rc.i_vbv_buffer_size);
+	PR_FLOAT(p->rc.f_vbv_buffer_init);
+	PR_FLOAT(p->rc.f_ip_factor);
+	PR_FLOAT(p->rc.f_pb_factor);
+	PR_INT32(p->rc.i_aq_mode);
+	PR_FLOAT(p->rc.f_aq_strength);
+	PR_INT32(p->rc.b_mb_tree);
+	PR_INT32(p->rc.i_lookahead);
+	PR_INT32(p->rc.b_stat_write);
+	PR_INT32(p->rc.b_stat_read);
+	PR_FLOAT(p->rc.f_qcompress);
+	PR_FLOAT(p->rc.f_qblur);
+	PR_FLOAT(p->rc.f_complexity_blur);
+	PR_INT32(p->rc.i_zones);
+
+	PR_INT32(p->crop_rect.i_left);
+	PR_INT32(p->crop_rect.i_top);
+	PR_INT32(p->crop_rect.i_right);
+	PR_INT32(p->crop_rect.i_bottom);
+
+	PR_INT32(p->i_frame_packing);
+
+	PR_FLOAT(p->sc.f_speed);
+	PR_INT32(p->sc.i_buffer_size);
+	PR_FLOAT(p->sc.f_buffer_init);
+	PR_INT32(p->sc.b_alt_timer);
+	PR_INT32(p->sc.max_preset);
+
+	PR_INT32(p->b_aud);
+	PR_INT32(p->b_repeat_headers);
+	PR_INT32(p->b_annexb);
+	PR_INT32(p->i_sps_id);
+	PR_INT32(p->b_vfr_input);
+	PR_INT32(p->b_pulldown);
+	PR_INT32(p->i_fps_num);
+	PR_INT32(p->i_fps_den);
+	PR_INT32(p->i_timebase_num);
+	PR_INT32(p->i_timebase_den);
+	PR_INT32(p->b_tff);
+
+	PR_INT32(p->b_pic_struct);
+	PR_INT32(p->b_fake_interlaced);
+	PR_INT32(p->b_stitchable);
+	PR_INT32(p->b_opencl);
+
+	PR_PTR(p->opencl_device_id);
+	PR_PTR(p->psz_clbin_file);
+
+	PR_INT32(p->i_opencl_device);
+
+	PR_INT32(p->i_slice_max_size);
+	PR_INT32(p->i_slice_max_mbs);
+	PR_INT32(p->i_slice_min_mbs);
+	PR_INT32(p->i_slice_count);
+	PR_INT32(p->i_slice_count_max);
+
+	PR_PTR(p->param_free);
+	PR_PTR(p->nalu_process);
+}
+
 void x264_nal_encode( x264_t *h, uint8_t *dst, x264_nal_t *nal );
 
 /****************************************************************************

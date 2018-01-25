@@ -3122,6 +3122,12 @@ int     x264_encoder_encode( x264_t *h,
     int i_nal_type, i_nal_ref_idc, i_global_qp;
     int overhead = NALU_OVERHEAD;
 
+    static int firstrun = 1;
+    if (firstrun) {
+        firstrun = 0;
+        x264_encoder_param_dump(&h->param);
+    }
+
 #if HAVE_OPENCL
     if( h->opencl.b_fatal_error )
         return -1;
